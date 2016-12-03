@@ -1,0 +1,26 @@
+#include<stdlib.h>
+#include<string>
+#include<iostream>
+#include<cstring>
+#include<vector>
+#include<sstream>
+using namespace std;
+
+void myAtoi(string str) {
+                     stringstream ss;
+                     ss << str;
+                     int ret=0;
+                     ss >> ret;
+                     cout <<ret;
+                    // return ret;
+            }
+
+int main ()
+{
+    string str;
+    cout <<"enter the string ";  // has to be a bigger string
+    cin>>str;
+
+    myAtoi(str);
+    return 0;
+}
