@@ -1,0 +1,29 @@
+#include <iostream>
+#include <stdlib.h>
+#include <thread>
+#include <string>
+#include<cstring>
+
+using namespace std;
+
+void foo()
+{
+    cout <<" foo function called "<<endl;
+}
+
+void bar(int x)
+{
+  cout <<" bar function called "<<endl<< x <<endl;
+}
+
+int main()
+{
+thread first (bar, 55);
+thread second (foo);
+cout <<"";
+cout <<"all functions running simultaneously"<<endl;
+first.join();
+second.join();
+cout <<"thread completed ";
+  return 0;
+}
