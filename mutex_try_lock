@@ -1,0 +1,47 @@
+#include <iostream>
+#include <stdlib.h>
+#include <thread>
+#include <string>
+#include<cstring>
+#include<mutex>
+
+using namespace std;
+
+mutex m1, m2;
+
+ void task_a()
+ {
+     m1.lock();
+     cout <<" task_a called \n" ;
+     m2.lock();
+     m1.unlock();
+     m2.unlock();
+
+ }
+
+
+ void task_b()
+ {
+     int x= try_lock(m1,m2);
+     if (x==-1)
+     {
+         cout <<"task_b called \n";
+         m1.unlock();
+         m2.unlock();
+     }
+     else
+     {
+        cout <<"task_b failed "<< (x?"m1":"m2")<< " is locked \n";
+     }
+ }
+
+
+int main ()
+{
+    thread th1(task_a);
+    thread th2(task_b);
+
+    th1.join();
+    th2.join();
+  return 0;
+}
