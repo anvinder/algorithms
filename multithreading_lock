@@ -1,0 +1,37 @@
+#include <iostream>
+#include <stdlib.h>
+#include <thread>
+#include <string>
+#include<cstring>
+#include<mutex>
+
+using namespace std;
+
+std::mutex m;//you can use std::lock_guard if you want to be exception safe
+int i = 0;
+
+void shakehandperson()
+{
+    m.lock();//1st person locks the door.
+      //
+      std::cout << i << " Hello Wife" << std::endl;
+      i++;//no other thread can access variable i until m.unlock() is called
+      //...until now, with no interruption from other men
+    m.unlock();//man lets go off after shaking hands and leaves.
+}
+
+int main()
+{
+    //man1 leaves the queue to go to shake hand
+    std::thread man1(shakehandperson);
+    //Although man2 appears to start second, there's a good chance he might
+    //reach the chief guest before
+    std::thread man2(shakehandperson);
+    //And hey, man3 also shakes hand
+    std::thread man3(shakehandperson);
+
+    man1.join();//man1 shakes hand with person 1 standing in the queue
+    man2.join();//man2 shakes hand with person 2 standing in the queue
+    man3.join();//man3 shakes hand with person 3 standing in the queue
+    return 0;
+}
